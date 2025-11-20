@@ -15,6 +15,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // disable CSRF for POST requests
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/signup").permitAll() // allow signup
+                .requestMatchers("/test").permitAll()
                 .anyRequest().authenticated() // block everything else
             );
 
