@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: prod
+
+server:
+  port: ${PORT:8080}   # Railway assigns PORT automatically
