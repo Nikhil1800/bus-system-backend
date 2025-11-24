@@ -1,4 +1,4 @@
-package com.prada.config;
+package com.TrueFare.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

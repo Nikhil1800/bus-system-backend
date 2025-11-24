@@ -1,4 +1,4 @@
-package com.prada.dto;
+package com.TrueFare.dto;
 
 import lombok.Data;
 
