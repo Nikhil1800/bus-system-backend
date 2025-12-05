@@ -1,36 +1,29 @@
 package com.TrueFare.controller;
 
-import com.TrueFare.security.JwtUtil;
-import com.google.gson.Gson;
+import com.TrueFare.dto.LoginRequest;
+import com.TrueFare.dto.SignupRequest;
+import com.TrueFare.service.AuthService;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Base64;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
-	@PostMapping("/mojo-verify")
-	public ResponseEntity<?> verify(@RequestBody Map<String, Object> request) throws Exception {
+	@Autowired
+	private AuthService authservice;
 
-	    // Phone OTP returns identifier like +91XXXXXXXXXX
-	    String phone = request.get("identifier").toString();
-
-	    // You can save user here or lookup existing user
-
-	    String jwt = JwtUtil.generateToken(phone);
-
-	    return ResponseEntity.ok(Map.of(
-	            "message", "Login Successful",
-	            "phone", phone,
-	            "jwt", jwt
-	    ));
+	@PostMapping("/signup")
+	public String signup(@RequestBody SignupRequest request) {
+		return authservice.signup(request);
 	}
 
+	// LOGIN API
+	@PostMapping("/login")
+	public String login(@RequestBody LoginRequest request) {
+		return authservice.login(request);
+	}
 
-	
 }
