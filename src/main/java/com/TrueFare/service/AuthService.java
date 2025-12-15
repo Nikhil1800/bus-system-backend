@@ -12,12 +12,18 @@ import com.TrueFare.repository.UserRepository;
 
 @Service
 public class AuthService {
-	@Autowired
+	@Autowired  //Create Object (Bean ) without new keyword
 	private UserRepository userRepository;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+	// For Signup the User
 	public String signup(SignupRequest request) {
+		User existingUser = userRepository.findByEmail(request.getEmail());
+		if (existingUser != null) {
+			return "User is already registered with this email.";
+		}
+//New User
 		User user = new User();
 		user.setEmail(request.getEmail());
 		user.setPassword(request.getPassword());
@@ -30,7 +36,7 @@ public class AuthService {
 		return "User Regerstered.";
 	}
 
-//	REVIEW ----------->>>>>>
+////For Login the User
 	public String login(LoginRequest request) {
 		// Get user by email
 		User user = userRepository.findByEmail(request.getEmail());
@@ -40,7 +46,7 @@ public class AuthService {
 			return "User not found";
 		}
 
-		//  Compare raw password with encrypted password
+		// Compare raw password with encrypted password
 		boolean isPasswordMatch = passwordEncoder.matches(request.getPassword(), user.getPassword());
 		if (!isPasswordMatch) {
 			return "Invalid password";
