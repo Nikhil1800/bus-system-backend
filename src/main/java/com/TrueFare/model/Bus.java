@@ -65,3 +65,5 @@ public class Bus {
 	}
 
 }
+
+//This class is use for defining the bus name,type,total seats.
