@@ -2,6 +2,8 @@ package com.TrueFare.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +19,12 @@ public class User {
 	String email;
 	@Column(nullable = false)
 	String password;
+
+//	It will set role user/ admin
+	@Enumerated(EnumType.STRING)
+//	@Enumerated(EnumType.STRING) stores enum values as their names (USER, ADMIN) in the database instead of numbers.
+	@Column(nullable = false)
+	Role role;
 
 //	Getter & Setter
 	public int getId() {
@@ -41,6 +49,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 }

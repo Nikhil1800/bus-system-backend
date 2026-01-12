@@ -1,5 +1,7 @@
 package com.TrueFare.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,14 +14,14 @@ import com.TrueFare.repository.UserRepository;
 
 @Service
 public class AuthService {
-	@Autowired  //Create Object (Bean ) without new keyword
+	@Autowired // Create Object (Bean ) without new keyword
 	private UserRepository userRepository;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	// For Signup the User
 	public String signup(SignupRequest request) {
-		User existingUser = userRepository.findByEmail(request.getEmail());
+		Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
 		if (existingUser != null) {
 			return "User is already registered with this email.";
 		}
@@ -39,7 +41,7 @@ public class AuthService {
 ////For Login the User
 	public String login(LoginRequest request) {
 		// Get user by email
-		User user = userRepository.findByEmail(request.getEmail());
+		Optional<User> user = userRepository.findByEmail(request.getEmail());
 
 		// If no user found
 		if (user == null) {
