@@ -40,18 +40,12 @@ public class AuthService {
 
 ////For Login the User
 	public String login(LoginRequest request) {
-		// Get user by email
-		Optional<User> user = userRepository.findByEmail(request.getEmail());
 
-		// If no user found
-		if (user == null) {
-			return "User not found";
-		}
+		User user = userRepository.findByEmail(request.getEmail())
+				.orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
-		// Compare raw password with encrypted password
-		boolean isPasswordMatch = passwordEncoder.matches(request.getPassword(), user.getPassword());
-		if (!isPasswordMatch) {
-			return "Invalid password";
+		if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+			throw new RuntimeException("Invalid email or password");
 		}
 
 		return "Login successful";
